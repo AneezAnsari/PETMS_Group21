@@ -1396,10 +1396,10 @@ def seed_events():
     db.session.commit()
     return f"{len(events)} realistic events seeded."
 
+with app.app_context():
+    db.create_all()
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
 
 @app.route("/verify-ticket/<ticket_code>")
@@ -1414,6 +1414,6 @@ def verify_ticket(ticket_code):
 @app.route("/my-ticket/<ticket_code>")
 @login_required
 def my_ticket(ticket_code):
-    ticket = Ticket.query.filter_by(ticket_code=ticket_code, user_id=current_user.id).first_or_404()
+    ticket = Ticket.query.filter_by(ticket_code=ticket_code).first_or_404()
     qr_code_base64 = generate_ticket_qr_base64(ticket.ticket_code)
     return render_template("my_ticket.html", ticket=ticket, qr_code_base64=qr_code_base64)
