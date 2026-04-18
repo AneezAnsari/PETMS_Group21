@@ -1,0 +1,42 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f4f4f4;
+        }
+        .card {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .valid {
+            color: green;
+        }
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        {% if valid %}
+            <h1 class="valid">Valid Ticket</h1>
+            <p><strong>Ticket Code:</strong> {{ ticket.ticket_code }}</p>
+            <p><strong>Event:</strong> {{ ticket.event.title }}</p>
+            <p><strong>Name:</strong> {{ ticket.user.name }}</p>
+            <p><strong>Status:</strong> Confirmed</p>
+        {% else %}
+            <h1 class="invalid">Invalid Ticket</h1>
+            <p>This ticket does not exist or is not valid.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

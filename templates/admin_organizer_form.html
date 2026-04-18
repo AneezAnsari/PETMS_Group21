@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ "Edit Organizer" if organizer else "Create Organizer" }}</h1>
+
+<form method="POST" class="form-box">
+    <h2>Organizer Profile</h2>
+    <label>Name</label>
+    <input type="text" name="name" value="{{ organizer.name if organizer else '' }}" required>
+
+    <label>Public Email</label>
+    <input type="email" name="email" value="{{ organizer.email if organizer else '' }}" required>
+
+    <label>Phone</label>
+    <input type="text" name="phone" value="{{ organizer.phone if organizer else '' }}">
+
+    <label>Organization Name</label>
+    <input type="text" name="organization_name" value="{{ organizer.organization_name if organizer else '' }}">
+
+    <label>Description</label>
+    <textarea name="description">{{ organizer.description if organizer else '' }}</textarea>
+
+    <h2>Organizer Login Account</h2>
+    <label>Username</label>
+    <input type="text" name="account_username" value="{{ organizer.user.username if organizer else '' }}" required>
+
+    <label>Account Email</label>
+    <input type="email" name="account_email" value="{{ organizer.user.email if organizer else '' }}" required>
+
+    <label>{{ "New Password (leave blank to keep current password)" if organizer else "Password" }}</label>
+    <input type="password" name="account_password" {{ '' if organizer else 'required' }}>
+
+    <button type="submit">{{ "Update Organizer" if organizer else "Create Organizer" }}</button>
+</form>
+{% endblock %}

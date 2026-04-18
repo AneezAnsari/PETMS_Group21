@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>My Tickets</h1>
+
+{% if tickets %}
+<div class="grid">
+    {% for ticket in tickets %}
+    <div class="card">
+        <h2>{{ ticket.booking.event.title }}</h2>
+        <p><strong>Organizer:</strong> {{ ticket.booking.event.organizer.name }}</p>
+        <p><strong>Ticket Code:</strong> {{ ticket.ticket_code }}</p>
+        <p><strong>Status:</strong> {{ ticket.status }}</p>
+        <p><strong>Location:</strong> {{ ticket.booking.event.location }}</p>
+        <p><strong>Date:</strong> {{ ticket.booking.event.event_date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Issued:</strong> {{ ticket.issued_at.strftime('%Y-%m-%d %H:%M') }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>You have no tickets yet.</p>
+{% endif %}
+{% endblock %}
+<h1>Your Ticket</h1>
+<p><strong>Event:</strong> {{ ticket.event.title }}</p>
+<p><strong>Ticket Code:</strong> {{ ticket.ticket_code }}</p>
+<img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code">

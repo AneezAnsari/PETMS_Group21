@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Two-Factor Verification</h1>
+
+<div class="card">
+    <p>Enter the 6-digit code from your authenticator app for <strong>{{ email }}</strong>.</p>
+</div>
+
+<form method="POST" class="form-box">
+    <label>Authenticator Code</label>
+    <input type="text" name="code" maxlength="6" required>
+    <button type="submit">Verify Code</button>
+</form>
+{% endblock %}

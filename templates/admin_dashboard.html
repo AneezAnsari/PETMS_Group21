@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<div class="grid stats-grid">
+    <div class="card stat-card"><h2>Organizers</h2><p>{{ organizer_count }}</p></div>
+    <div class="card stat-card"><h2>Events</h2><p>{{ event_count }}</p></div>
+    <div class="card stat-card"><h2>Bookings</h2><p>{{ booking_count }}</p></div>
+    <div class="card stat-card"><h2>Tickets</h2><p>{{ ticket_count }}</p></div>
+    <div class="card stat-card"><h2>Revenue</h2><p>${{ "%.2f"|format(total_revenue) }}</p></div>
+</div>
+
+<div class="card action-row">
+    <a class="btn" href="{{ url_for('admin_organizers') }}">Manage Organizers</a>
+    <a class="btn" href="{{ url_for('admin_events') }}">Manage Events</a>
+    <a class="btn" href="{{ url_for('admin_reports') }}">View Reports</a>
+</div>
+{% endblock %}

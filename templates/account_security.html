@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Account Security</h1>
+
+<div class="card">
+    <h2>Password Reset</h2>
+    <p>If you forgot your password, you can request a reset link by email.</p>
+    <a class="btn" href="{{ url_for('forgot_password') }}">Forgot Password</a>
+</div>
+
+<div class="card">
+    <h2>Two-Factor Authentication (2FA)</h2>
+    <p><strong>Status:</strong>
+        {% if current_user.twofa_enabled %}
+            Enabled
+        {% else %}
+            Disabled
+        {% endif %}
+    </p>
+
+    {% if current_user.twofa_enabled %}
+        <p>Your account requires an authenticator code at sign-in.</p>
+        <form method="POST" action="{{ url_for('disable_2fa') }}">
+            <button type="submit" onclick="return confirm('Disable 2FA for your account?')">Disable 2FA</button>
+        </form>
+    {% else %}
+        <p>Protect your account with an authenticator app such as Google Authenticator, Microsoft Authenticator, or Authy.</p>
+        <a class="btn" href="{{ url_for('setup_2fa') }}">Set Up 2FA</a>
+    {% endif %}
+</div>
+
+{% if current_user.twofa_secret and qr_code_data %}
+<div class="card">
+    <h2>Current QR Code</h2>
+    <p>You can scan this again in your authenticator app if needed.</p>
+    <img src="{{ qr_code_data }}" alt="2FA QR Code" style="max-width: 240px;">
+</div>
+{% endif %}
+{% endblock %}

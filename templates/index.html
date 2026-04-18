@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Public Event Ticket Management System</h1>
+<p>Browse events, book digital tickets, and manage events through role-based dashboards for admins and organizers.</p>
+
+<div class="card">
+    <h2>Demo accounts</h2>
+    <p><strong>Admin:</strong> admin@petms.com / Admin123!</p>
+    <p><strong>Organizer accounts:</strong> organizer1@petms.com through organizer6@petms.com / Organizer123!</p>
+</div>
+
+<h2>Featured Events</h2>
+{% if featured_events %}
+<div class="grid">
+    {% for event in featured_events %}
+    <div class="card">
+        <h3>{{ event.title }}</h3>
+        <p><strong>Organizer:</strong> {{ event.organizer.organization_name or event.organizer.name }}</p>
+        <p><strong>Category:</strong> {{ event.category }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Date:</strong> {{ event.event_date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Price:</strong> ${{ '%.2f'|format(event.ticket_price) }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No events yet. Seed organizers and events to get started.</p>
+{% endif %}
+{% endblock %}

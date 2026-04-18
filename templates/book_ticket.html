@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Book Ticket</h1>
+
+<div class="card">
+    <h2>{{ event.title }}</h2>
+    <p><strong>Organizer:</strong> {{ event.organizer.name }}</p>
+    <p><strong>Organizer Email:</strong> {{ event.organizer.email }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Date:</strong> {{ event.event_date.strftime('%Y-%m-%d %H:%M') }}</p>
+    <p><strong>Price per Ticket:</strong> ${{ "%.2f"|format(event.ticket_price) }}</p>
+    <p><strong>Available Tickets:</strong> {{ event.available_tickets }}</p>
+</div>
+
+<form method="POST" class="form-box">
+    <label>Number of Tickets</label>
+    <input type="number" name="quantity" min="1" required>
+    <button type="submit">Confirm Booking</button>
+</form>
+{% endblock %}

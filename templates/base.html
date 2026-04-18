@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PETMS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="{{ url_for('home') }}">PETMS</a>
+            <a href="{{ url_for('events') }}">Events</a>
+            <a href="{{ url_for('real_events') }}">Real Events</a>
+
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+                <a href="{{ url_for('admin_reports') }}">Reports</a>
+            {% elif current_user.is_authenticated and current_user.role == 'organizer' %}
+                <a href="{{ url_for('organizer_dashboard') }}">Organizer</a>
+                <a href="{{ url_for('organizer_reports') }}">My Reports</a>
+            {% endif %}
+        </div>
+
+        <div class="nav-right">
+            {% if current_user.is_authenticated %}
+                {% if current_user.role == 'customer' %}
+                    <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+                    <a href="{{ url_for('my_tickets') }}">My Tickets</a>
+                {% endif %}
+                <a href="{{ url_for('account_security') }}">Account Security</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>My Bookings</h1>
+
+{% if bookings %}
+<div class="grid">
+    {% for booking in bookings %}
+    <div class="card">
+        <h2>{{ booking.event.title }}</h2>
+        <p><strong>Organizer:</strong> {{ booking.event.organizer.name }}</p>
+        <p><strong>Location:</strong> {{ booking.event.location }}</p>
+        <p><strong>Event Date:</strong> {{ booking.event.event_date.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
+        <p><strong>Total Price:</strong> ${{ "%.2f"|format(booking.total_price) }}</p>
+        <p><strong>Status:</strong> {{ booking.status }}</p>
+        <p><strong>Booked At:</strong> {{ booking.booked_at.strftime('%Y-%m-%d %H:%M') }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>You have no bookings yet.</p>
+{% endif %}
+{% endblock %}
